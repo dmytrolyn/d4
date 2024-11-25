@@ -10,8 +10,8 @@ import { CvePage, InfoPage, NotFoundPage } from "./pages";
 export const App = () => {
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Navigate to="/cve" replace />} />
           <Route path="/cve" element={<CvePage />} />
