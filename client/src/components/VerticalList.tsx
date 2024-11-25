@@ -2,11 +2,11 @@ import { useState } from "react";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 
 export const VerticalList = () => {
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState("");
 
   const items = ["Past 5 days", "10 newest", "10 critical", "Search"];
 
-  const handleItemClick = async (item) => {
+  const handleItemClick = async (item: string) => {
     setSelectedItem(item);
   };
 
