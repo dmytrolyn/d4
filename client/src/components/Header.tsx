@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#1976d2" }}>
+    <AppBar position="static" sx={{ backgroundColor: "black" }}>
       <Toolbar>
         <img
           src="./src/assets/logo.png"
@@ -14,7 +14,7 @@ export const Header = () => {
             verticalAlign: "middle",
           }}
         />
-        <Typography variant="h6" component="div">
+        <Typography variant="h5" component="div" fontWeight={600}>
           Library
         </Typography>
         <Box sx={{ margin: "0 30px" }}>
