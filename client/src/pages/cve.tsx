@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
 import useSWR from "swr";
 import { VerticalList, CVETable } from "@/components";
 import { Response } from "@/types";
@@ -22,12 +22,17 @@ export const CvePage = () => {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        margin: "40px 0",
+        margin: "40px",
       }}
     >
-      <VerticalList />
+      <Box>
+        <Typography variant="h6" gutterBottom>
+          Show CVE
+        </Typography>
+        <VerticalList />
+      </Box>
       {isLoading ? (
-        <div>Loading...</div>
+        <CircularProgress />
       ) : (
         <CVETable data={data?.vulnerabilities} styles={{ maxWidth: "700px" }} />
       )}
