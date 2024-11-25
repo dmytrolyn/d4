@@ -5,32 +5,30 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
-  TextField,
   Paper,
   Box,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import useSWR from "swr";
+
+const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) throw new Error("Network response was not ok");
+    return res.json();
+  });
 
 export const App = () => {
-  const [rows, setRows] = useState([
+  const { data, error, isLoading } = useSWR(
+    "http://localhost:8000/get/all",
+    fetcher
+  );
+
+  const [rows] = useState([
     { id: 1, name: "John Doe", age: 28 },
     { id: 2, name: "Jane Smith", age: 34 },
     { id: 3, name: "Sam Brown", age: 22 },
   ]);
-
-  // Поля введення
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-
-  const handleAddRow = () => {
-    if (name && age) {
-      setRows([...rows, { id: rows.length + 1, name, age: Number(age) }]);
-      setName("");
-      setAge("");
-    }
-  };
 
   return (
     <Box sx={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
@@ -58,28 +56,6 @@ export const App = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* Форма для додавання записів */}
-      <Box sx={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-        <TextField
-          label="Name"
-          variant="outlined"
-          fullWidth
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <TextField
-          label="Age"
-          variant="outlined"
-          type="number"
-          fullWidth
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
-        <Button variant="contained" color="primary" onClick={handleAddRow}>
-          Add
-        </Button>
-      </Box>
     </Box>
   );
 };
