@@ -24,7 +24,7 @@ def get_all_cve():
  params = { 'resultsPerPage': PAGE_SIZE, 'startIndex': 0, 'pubStartDate': pubStart, 'pubEndDate': pubEnd }
  try:
   # response = requests.get(BASE_URL, headers=GET_HEADERS, params=params)
-  with open('../data2.json', 'r') as file: 
+  with open('data2.json', 'r', encoding='utf-8') as file: 
    data = json.load(file)
   return data
  
