@@ -21,6 +21,8 @@ app.include_router(router=get.router, prefix="/get")
 @app.get('/info')
 def get_app_info():
  return {
-  'app': f'Created with FastAPI of version {__version__}',
-  'author': 'Dmytro Lyn'
+  'app': 'CVE Library web application',
+  'description': 'Made only for learning purpose',
+  'usage': 'Use one of given options to get intel about known CVE\'s',
+  'author': 'Credits to © Dmytro Lyn'
  }
