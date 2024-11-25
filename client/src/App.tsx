@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import useSWR from "swr";
+import { Header } from "./Header";
 
 const fetcher = (url: string) =>
   fetch(url).then((res) => {
@@ -31,31 +32,34 @@ export const App = () => {
   ]);
 
   return (
-    <Box sx={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
-      <Typography variant="h4" align="center" gutterBottom>
-        Data Table
-      </Typography>
+    <>
+      <Header />
+      <Box sx={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Data Table
+        </Typography>
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Age</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row: any) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.age}</TableCell>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Age</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+            </TableHead>
+            <TableBody>
+              {rows.map((row: any) => (
+                <TableRow key={row.id}>
+                  <TableCell>{row.id}</TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.age}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </>
   );
 };
