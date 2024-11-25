@@ -7,7 +7,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { Vulnerability } from "./types";
+import { Vulnerability } from "../types";
 
 export const CVETable: React.FC<{
   data?: Vulnerability[];
