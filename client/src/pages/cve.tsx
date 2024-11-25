@@ -25,8 +25,12 @@ export const CvePage = () => {
         margin: "40px",
       }}
     >
-      <Box>
-        <Typography variant="h6" gutterBottom>
+      <Box
+        sx={{
+          marginRight: "40px",
+        }}
+      >
+        <Typography variant="h6" gutterBottom textAlign="center">
           Show CVE
         </Typography>
         <VerticalList />
