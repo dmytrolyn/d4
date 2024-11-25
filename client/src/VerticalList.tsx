@@ -13,14 +13,13 @@ export const VerticalList = () => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
 
-  const items = ["Item 1", "Item 2", "Item 3", "Item 4"];
+  const items = ["Past 5 days", "10 newest", "10 critical", "Search"];
 
   const handleItemClick = async (item) => {
     setSelectedItem(item);
     setLoading(true);
     setResponse("");
 
-    // Імітація API-запиту
     try {
       const res = await new Promise((resolve) =>
         setTimeout(() => resolve(`Response from API for ${item}`), 1500)
@@ -38,7 +37,7 @@ export const VerticalList = () => {
       style={{ maxWidth: "600px", margin: "20px auto", textAlign: "center" }}
     >
       <Typography variant="h6" gutterBottom>
-        Clickable List
+        Show CVE
       </Typography>
       <List>
         {items.map((item, index) => (

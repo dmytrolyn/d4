@@ -5,12 +5,16 @@ export const Header = () => {
     <AppBar position="static" sx={{ backgroundColor: "#1976d2" }}>
       <Toolbar>
         <img
-          src="https://via.placeholder.com/40"
+          src="./src/assets/logo.png"
           alt="Logo"
-          style={{ marginRight: "10px", height: "40px" }}
+          style={{
+            marginRight: "10px",
+            height: "50px",
+            verticalAlign: "middle",
+          }}
         />
         <Typography variant="h6" component="div">
-          My Application
+          Library
         </Typography>
       </Toolbar>
     </AppBar>
