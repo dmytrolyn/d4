@@ -5,10 +5,14 @@ export interface Response {
   timestamp: string;
   totalResults: number;
   version: string;
-  vulnerabilities: CVE[];
+  vulnerabilities: Vulnerability[];
 }
 
-interface CVE {
+export interface Vulnerability {
+  cve: CVE;
+}
+
+export interface CVE {
   id: string;
   lastModified: string;
   published: string;
