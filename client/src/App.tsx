@@ -7,12 +7,12 @@ import {
   TableRow,
   Paper,
   Box,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import useSWR from "swr";
 import { Header } from "./Header";
 import { VerticalList } from "./VerticalList";
+import { Response } from "./types";
 
 const fetcher = (url: string) =>
   fetch(url).then((res) => {
@@ -21,7 +21,7 @@ const fetcher = (url: string) =>
   });
 
 export const App = () => {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading } = useSWR<Response>(
     "http://localhost:8000/get/all",
     fetcher
   );
