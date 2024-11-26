@@ -2,12 +2,15 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 import { useState } from "react";
 import useSWR from "swr";
 import { VerticalList, CVETable } from "@/components";
-import { Response } from "@/types";
-import { cveUrls, fetcher } from "@/api";
+import { Response, type ListItem } from "@/types";
+import { fetcher } from "@/api";
+import { requestsMapping } from "@/utils";
 
 export const CvePage = () => {
-  const [currentUrl, setCurrentUrl] = useState<string>(cveUrls.all);
-  const { data, isLoading } = useSWR<Response>(currentUrl, fetcher);
+  const [currentOption, setCurrentOption] = useState<ListItem>(
+    requestsMapping.find((i) => i.title === "Past 5 days (max 40)")!
+  );
+  const { data, isLoading } = useSWR<Response>(currentOption.url, fetcher);
 
   return (
     <Box
@@ -22,17 +25,25 @@ export const CvePage = () => {
       <Box
         sx={{
           marginRight: "40px",
+          minWidth: "200px",
         }}
       >
         <Typography variant="h6" gutterBottom textAlign="center">
           Show CVE
         </Typography>
-        <VerticalList />
+        <VerticalList
+          items={requestsMapping}
+          currentOption={currentOption}
+          changeOption={setCurrentOption}
+        />
       </Box>
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <CVETable data={data?.vulnerabilities} styles={{ maxWidth: "700px" }} />
+        <CVETable
+          data={data?.vulnerabilities}
+          styles={{ maxWidth: "700px", minHeight: "585px" }}
+        />
       )}
     </Box>
   );
