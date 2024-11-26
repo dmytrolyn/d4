@@ -1,16 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Typography, CircularProgress } from "@mui/material";
 import { useState } from "react";
 import useSWR from "swr";
-import { VerticalList, CVETable } from "@/components";
-import { Response, type ListItem } from "@/types";
+import { VerticalList, CVETable, SearchBar } from "@/components";
+import { type ListItem } from "@/types";
 import { fetcher } from "@/api";
-import { requestsMapping } from "@/utils";
+import { requestsMapping, searchItem } from "@/utils";
 
 export const CvePage = () => {
   const [currentOption, setCurrentOption] = useState<ListItem>(
     requestsMapping.find((i) => i.title === "Past 5 days (max 40)")!
   );
-  const { data, isLoading } = useSWR<any>(currentOption.url, fetcher);
+  const { data, isLoading } = useSWR<any>(currentOption.url, fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    refreshInterval: 0,
+  });
 
   return (
     <Box
@@ -18,7 +23,6 @@ export const CvePage = () => {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center",
         margin: "40px",
       }}
     >
@@ -36,6 +40,9 @@ export const CvePage = () => {
           currentOption={currentOption}
           changeOption={setCurrentOption}
         />
+        <SearchBar
+          changeOption={(value: string) => setCurrentOption(searchItem(value))}
+        />
       </Box>
       {isLoading ? (
         <CircularProgress />
@@ -43,7 +50,7 @@ export const CvePage = () => {
         <CVETable
           data={data}
           styles={{
-            maxWidth: "700px",
+            maxWidth: "1000px",
             minHeight: "585px",
           }}
         />

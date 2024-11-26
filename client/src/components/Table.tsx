@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Table,
   TableBody,
@@ -6,6 +7,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Box,
 } from "@mui/material";
 
 export const CVETable: React.FC<{
@@ -31,17 +33,35 @@ export const CVETable: React.FC<{
         >
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell>SourceIdentifier</TableCell>
+            <TableCell>Description</TableCell>
+            <TableCell>Reference</TableCell>
             <TableCell>Published</TableCell>
+            <TableCell>Severity</TableCell>
           </TableRow>
         </TableHead>
         <TableBody sx={{ overflowY: "scroll" }}>
           {data?.map((item) => {
             return (
               <TableRow key={item._id}>
-                <TableCell>{item._id}</TableCell>
-                {/* <TableCell>{item.description[0]}</TableCell>
-                <TableCell>{item.description[1]}</TableCell> */}
+                <TableCell>
+                  <Box sx={{ minWidth: "min-content" }}>{item._id}</Box>
+                </TableCell>
+                <TableCell
+                  dangerouslySetInnerHTML={{ __html: item.flatDescription }}
+                ></TableCell>
+                <TableCell>
+                  <a
+                    href={item._source.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item._source.href}
+                  </a>
+                </TableCell>
+                <TableCell>
+                  {new Date(item._source.published).toLocaleString()}
+                </TableCell>
+                <TableCell>{item._source.cvss.severity}</TableCell>
               </TableRow>
             );
           })}
