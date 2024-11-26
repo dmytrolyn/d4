@@ -8,6 +8,12 @@ export interface Response {
   vulnerabilities: Vulnerability[];
 }
 
+export interface Info {
+  app: string;
+  description: string;
+  usage: string;
+  author: string;
+}
 export interface Vulnerability {
   cve: CVE;
 }
