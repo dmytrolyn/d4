@@ -10,7 +10,7 @@ export const CvePage = () => {
   const [currentOption, setCurrentOption] = useState<ListItem>(
     requestsMapping.find((i) => i.title === "Past 5 days (max 40)")!
   );
-  const { data, isLoading } = useSWR<Response>(currentOption.url, fetcher);
+  const { data, isLoading } = useSWR<any>(currentOption.url, fetcher);
 
   return (
     <Box
@@ -41,8 +41,11 @@ export const CvePage = () => {
         <CircularProgress />
       ) : (
         <CVETable
-          data={data?.vulnerabilities}
-          styles={{ maxWidth: "700px", minHeight: "585px" }}
+          data={data}
+          styles={{
+            maxWidth: "700px",
+            minHeight: "585px",
+          }}
         />
       )}
     </Box>

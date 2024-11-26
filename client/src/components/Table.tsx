@@ -7,10 +7,9 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { Vulnerability } from "../types";
 
 export const CVETable: React.FC<{
-  data?: Vulnerability[];
+  data?: any[];
   styles?: React.CSSProperties;
 }> = ({ data, styles }) => {
   return (
@@ -36,13 +35,13 @@ export const CVETable: React.FC<{
             <TableCell>Published</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {data?.map(({ cve }) => {
+        <TableBody sx={{ overflowY: "scroll" }}>
+          {data?.map((item) => {
             return (
-              <TableRow key={cve.id}>
-                <TableCell>{cve.id}</TableCell>
-                <TableCell>{cve.sourceIdentifier}</TableCell>
-                <TableCell>{cve.published}</TableCell>
+              <TableRow key={item._id}>
+                <TableCell>{item._id}</TableCell>
+                {/* <TableCell>{item.description[0]}</TableCell>
+                <TableCell>{item.description[1]}</TableCell> */}
               </TableRow>
             );
           })}

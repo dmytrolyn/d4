@@ -36,10 +36,16 @@ def get_all_cve():
  five_days_ago_str = five_days_ago.strftime("%Y-%m-%dT00:00:00")
 
  payload = {
-    "query": f"published:[{five_days_ago_str} TO NOW]",
+    "query": f"type:cve AND published:[{five_days_ago_str} TO NOW]",
+    "size": 40,
+    "sort": "published",
+    "order": "desc",
     "apiKey": API_KEY
  }
- return POST_REQUEST(BASE_URL, payload)
+ cve_list = POST_REQUEST(BASE_URL, payload)
+ filtered_cve_list = [cve for cve in cve_list if cve['_id'].startswith('CVE-')]
+
+ return filtered_cve_list
 
 @router.get('/new')
 def get_new_cve():
