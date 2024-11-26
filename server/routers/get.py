@@ -1,40 +1,66 @@
 from fastapi import APIRouter
-from constants.urls import BASE_URL
-from constants.limits import PAGE_SIZE
+from dotenv import load_dotenv
 import requests
-import json
-from datetime import datetime, timedelta
+import datetime
+import os
+
+load_dotenv()
 
 router = APIRouter()
 
-GET_HEADERS = {
- "accept": "application/json",
-}
+BASE_URL = "https://vulners.com/api/v3/search/lucene/"
+API_KEY = os.getenv("API_KEY")
+
+def POST_REQUEST(url, payload):
+ response = requests.post(url, json=payload)
+ data = response.json()
+
+ return data["data"]["search"]
 
 @router.get('/')
 def get_cve(key: str):
- params = { 'keywordSearch': key, 'resultsPerPage': PAGE_SIZE }
- return requests.get(BASE_URL, params)
+ payload = {
+  "query": f"type:cve AND {key}",
+  "size": 10,
+  "sort": "published",
+  "order": "desc",
+  "apiKey": API_KEY
+ }
+  
+ return POST_REQUEST(BASE_URL, payload)
 
 @router.get('/all')
 def get_all_cve():
- pubEnd = datetime.now()
- pubStart = pubEnd - timedelta(days=5)
+ today = datetime.date.today()
+ five_days_ago = today - datetime.timedelta(days=5)
+ five_days_ago_str = five_days_ago.strftime("%Y-%m-%dT00:00:00")
 
- params = { 'resultsPerPage': PAGE_SIZE, 'startIndex': 0, 'pubStartDate': pubStart, 'pubEndDate': pubEnd }
- try:
-  # response = requests.get(BASE_URL, headers=GET_HEADERS, params=params)
-  with open('data2.json', 'r', encoding='utf-8') as file: 
-   data = json.load(file)
-  return data
- 
- except requests.RequestException as error:
-  return { error: error.errno }
+ payload = {
+    "query": f"published:[{five_days_ago_str} TO NOW]",
+    "apiKey": API_KEY
+ }
+ return POST_REQUEST(BASE_URL, payload)
 
 @router.get('/new')
 def get_new_cve():
- return []
+ payload = {
+    "query": "type:cve",
+    "size": 10,
+    "sort": "published",
+    "order": "desc",
+    "apiKey": API_KEY
+ }
+
+ return POST_REQUEST(BASE_URL, payload)
 
 @router.get('/critical')
 def get_critical_cve():
- return []
+ payload = {
+    "query": "type:cve AND (cvss.score:{9 TO *} OR cvss3.score:{9 TO *})",
+    "size": 10,
+    "sort": "published",
+    "order": "desc",
+    "apiKey": API_KEY
+ }
+ 
+ return POST_REQUEST(BASE_URL, payload)
