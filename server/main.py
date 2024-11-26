@@ -1,4 +1,4 @@
-from fastapi import FastAPI, __version__
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import get
 
