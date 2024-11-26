@@ -1,19 +1,13 @@
 import { Box, Typography, CircularProgress } from "@mui/material";
+import { useState } from "react";
 import useSWR from "swr";
 import { VerticalList, CVETable } from "@/components";
 import { Response } from "@/types";
-
-const fetcher = (url: string) =>
-  fetch(url).then((res) => {
-    if (!res.ok) throw new Error("Network response was not ok");
-    return res.json();
-  });
+import { cveUrls, fetcher } from "@/api";
 
 export const CvePage = () => {
-  const { data, isLoading } = useSWR<Response>(
-    "http://localhost:8000/get/all",
-    fetcher
-  );
+  const [currentUrl, setCurrentUrl] = useState<string>(cveUrls.all);
+  const { data, isLoading } = useSWR<Response>(currentUrl, fetcher);
 
   return (
     <Box
