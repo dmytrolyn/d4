@@ -13,7 +13,15 @@ export const App = () => {
     <>
       <Router>
         <Header />
-        <Box sx={{ flex: 1, height: "100%" }}>
+        <Box
+          sx={{
+            flex: 1,
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Routes>
             <Route path="/" element={<Navigate to="/cve" replace />} />
             <Route path="/cve" element={<CvePage />} />

@@ -9,11 +9,15 @@ export const InfoPage = () => {
   if (!data) return <CircularProgress />;
 
   return (
-    <Box>
-      <Typography>{data.app}</Typography>
-      <Typography>{data.description}</Typography>
-      <Typography>{data.usage}</Typography>
-      <Typography>{data.author}</Typography>
+    <Box sx={{ textAlign: "center" }}>
+      <Typography fontSize={32} fontWeight={600} fontFamily={"monospace"}>
+        {data.app}
+      </Typography>
+      <Typography fontSize={20}>{data.description}</Typography>
+      <Typography fontSize={20}>{data.usage}</Typography>
+      <Typography fontSize={18} fontWeight={600} fontFamily={"monospace"}>
+        {data.author}
+      </Typography>
     </Box>
   );
 };

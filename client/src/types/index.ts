@@ -8,6 +8,11 @@ export interface Response {
   vulnerabilities: Vulnerability[];
 }
 
+export type ListItem = {
+  url: string;
+  title: string;
+};
+
 export interface Info {
   app: string;
   description: string;
